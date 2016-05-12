@@ -9,7 +9,7 @@ Sample usage is =tagmp3 songname.mp3=
 
 To do this on your entire music library, for example in =~/music=,
 #+BEGIN_SRC bash
-find ~/music -name '*.mp3' parallel tagmp3 "{}"
+find ~/music -name '*.mp3' | parallel tagmp3 "{}"
 #+END_SRC
 
 Or using =find='s /exec/ functionality:
