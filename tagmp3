@@ -56,6 +56,6 @@ def get_image(array):
 
 if __name__ == '__main__':
         if len(sys.argv) < 2:
-                print("Must provide an MP3 file")
+                print("Usage: %s some_song.mp3" % sys.argv[0])
                 sys.exit(1)
         init(sys.argv[1])
