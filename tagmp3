@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+from mutagen.mp3 import MP3
+from mutagen.id3 import ID3, APIC, error
+from mutagen.easyid3 import EasyID3
+import requests
+import sys
+
+
+def init(filename):
+        ez_audio = EasyID3(filename)
+        info = get_request(ez_audio["title"][0], ez_audio["artist"][0])
+        page = requests.get(get_image(info['track']['album']['image']))
+        audio = MP3(sys.argv[1], ID3=ID3)
+
+        try:
+                audio.add_tags()
+        except error:
+                pass
+
+        audio.tags.add(
+                APIC(
+                        encoding=3,
+                        mime='image/png',
+                        type=3,
+                        desc=u'Cover',
+                        data=page.content
+                )
+        )
+
+        audio.save()
+
+
+def get_request_str(track, artist, host, api_key):
+        url = host + "/2.0?method=track.getInfo&api_key="
+        url += api_key + "&artist=" + artist + "&track="
+        url += track + "&format=json"
+        return url
+
+
+def get_request(track, artist, host="https://ws.audioscrobbler.com",
+                api_key="b25b959554ed76058ac220b7b2e0a026"):
+        r = requests.get(get_request_str(track, artist, host, api_key))
+        return r.json()
+
+
+def get_image(array):
+        img_url = "";
+        for a in array:
+                img_url = a['#text']
+        return img_url
+
+if __name__ == '__main__':
+        if len(sys.argv) < 2:
+                print("Must provide an MP3 file")
+                sys.exit(1)
+        init(sys.argv[1])
