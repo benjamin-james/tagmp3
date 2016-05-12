@@ -1,13 +1,15 @@
 * tagmp3
-Edits ID3 tags of MP3 files to add album art and other relevant info
+Edits ID3 tags of MP3 files to add album art from Last.FM
 * Installation
 tagmp3 requires Python 3 and the Python 3 libraries mutagen and requests
 
 To install, copy =tagmp3= to ~/bin or any another location
 * Usage
-Sample usage is =tagmp3 songname.mp3=
+Usage: =tagmp3 songname.mp3=
 
 To do this on your entire music library, for example in =~/music=,
+
+Using GNU Parallel:
 #+BEGIN_SRC bash
 find ~/music -name '*.mp3' | parallel tagmp3 "{}"
 #+END_SRC
@@ -16,3 +18,7 @@ Or using =find='s /exec/ functionality:
 #+BEGIN_SRC bash
 find ~/music -name '*.mp3' -exec tagmp3 "{}" \;
 #+END_SRC
+
+The MP3 file must already have name and artist info in order to fetch album art from Last.FM.
+
+Note: This script may fail if the ID3 metadata doesn't match the format that Last.FM has on their database
