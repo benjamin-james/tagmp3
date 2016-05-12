@@ -9,7 +9,11 @@ import sys
 def init(filename):
         ez_audio = EasyID3(filename)
         info = get_request(ez_audio["title"][0], ez_audio["artist"][0])
-        page = requests.get(get_image(info['track']['album']['image']))
+        try:
+                page = requests.get(get_image(info['track']['album']['image']))
+        except KeyError:
+                print("No such album for %s %s" % ez_audio["title"][0], ez_audio["artist"][0])
+                raise
         audio = MP3(sys.argv[1], ID3=ID3)
 
         try:
