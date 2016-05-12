@@ -1,15 +1,19 @@
 * tagmp3
-Edits ID3 tags of MP3 files to add album art from [[http://last.fm][Last.FM]]
+Adds album art from [[http://last.fm][Last.FM]] to the ID3 tags of an MP3 file
 * Installation
 tagmp3 requires [[http://python.org][Python 3]] and the Python 3 libraries [[https://github.com/nex3/mutagen][mutagen]] and [[http://docs.python-requests.org/en/master/][requests]]
 
-To install, clone this repo and copy =tagmp3= to =~/bin= or another location in $PATH
+To install, clone this repo and copy =tagmp3= to =~/bin= or another location in =$PATH=
+Or just by using cURL:
+#+BEGIN_SRC bash
+curl https://raw.githubusercontent.com/benjamin-james/tagmp3/master/tagmp3 -o ~/bin/tagmp3
+#+END_SRC
 * Usage
 Usage: =tagmp3 songname.mp3=
 
-To do this on your entire music library, for example in =~/music=,
+To do this on your entire music library, for example on =~/music=,
 
-Using GNU Parallel:
+Using [[https://www.gnu.org/software/parallel][GNU Parallel]]
 #+BEGIN_SRC bash
 find ~/music -name '*.mp3' | parallel tagmp3 "{}"
 #+END_SRC
