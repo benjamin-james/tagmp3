@@ -7,6 +7,7 @@ import re
 import sys
 import os
 
+
 def init(filename):
         ez_audio = EasyID3(filename)
         has_tags = True
@@ -24,11 +25,17 @@ def init(filename):
                               "or with valid ID3 tags")
                         sys.exit(1)
         info = get_request(title, artist)
-        if not has_tags:
+        genres = list()
+        for genre in info['track']['toptags']['tag']:
+                genres.append(genre['name'])
+        if not ez_audio["title"]:
                 ez_audio["title"] = [title]
+        if not ez_audio["artist"]:
                 ez_audio["artist"] = [artist]
+        if not ez_audio["album"]:
                 ez_audio["album"] = [info['track']['album']['title']]
-                ez_audio.save()
+        ez_audio["genre"] = genres
+        ez_audio.save()
         try:
                 page = requests.get(get_image(info['track']['album']['image']))
         except KeyError:
