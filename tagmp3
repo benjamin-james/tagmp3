@@ -69,7 +69,7 @@ def get_request(track, artist, host="https://ws.audioscrobbler.com",
 
 
 def get_image(array):
-        img_url = "";
+        img_url = ""
         for a in array:
                 img_url = a['#text']
         return img_url

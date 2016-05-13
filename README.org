@@ -1,5 +1,7 @@
 * tagmp3
 Adds album art from [[http://last.fm][Last.FM]] to the ID3 tags of an MP3 file
+
+It recognizes the song by either the filename format 'Artist_Name - Track_Name.mp3' or its already present artist and track ID3 metadata.
 * Installation
 tagmp3 requires [[http://python.org][Python 3]] and the Python 3 libraries [[https://github.com/nex3/mutagen][mutagen]] and [[http://docs.python-requests.org/en/master/][requests]]
 
