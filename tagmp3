@@ -5,7 +5,7 @@ from mutagen.easyid3 import EasyID3
 import requests
 import re
 import sys
-
+import os
 
 def init(filename):
         ez_audio = EasyID3(filename)
@@ -15,9 +15,10 @@ def init(filename):
                 artist = ez_audio["artist"][0]
         except KeyError:
                 has_tags = False
+                fname = os.path.basename(filename)
                 p = re.compile("(.+)\s+-\s+(.*).mp3")
-                artist = p.match(filename).group(1)
-                title = p.match(filename).group(2)
+                artist = p.match(fname).group(1)
+                title = p.match(fname).group(2)
                 if not title or not artist:
                         print("Please enter a song either in a valid format"
                               "or with valid ID3 tags")
