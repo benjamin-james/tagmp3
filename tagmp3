@@ -3,17 +3,37 @@ from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC, error
 from mutagen.easyid3 import EasyID3
 import requests
+import re
 import sys
 
 
 def init(filename):
         ez_audio = EasyID3(filename)
-        info = get_request(ez_audio["title"][0], ez_audio["artist"][0])
+        has_tags = True
+        try:
+                title = ez_audio["title"][0]
+                artist = ez_audio["artist"][0]
+        except KeyError:
+                has_tags = False
+                p = re.compile("(.+)\s+-\s+(.*).mp3")
+                artist = p.match(filename).group(1)
+                title = p.match(filename).group(2)
+                if not title or not artist:
+                        print("Please enter a song either in a valid format"
+                              "or with valid ID3 tags")
+                        sys.exit(1)
+        info = get_request(title, artist)
+        if not has_tags:
+                ez_audio["title"] = [title]
+                ez_audio["artist"] = [artist]
+                ez_audio["album"] = [info['track']['album']['title']]
+                ez_audio.save()
         try:
                 page = requests.get(get_image(info['track']['album']['image']))
         except KeyError:
-                print("No such album for %s %s" %
-                      ez_audio["title"][0], ez_audio["artist"][0])
+                print("No such album for %s - %s" %
+                      (title, artist))
+
                 raise
         audio = MP3(sys.argv[1], ID3=ID3)
 
