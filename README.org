@@ -11,7 +11,7 @@ To install, clone this repo and copy =tagmp3= to =~/bin= or another location in 
 
 Or just by using cURL:
 #+BEGIN_SRC bash
-curl https://raw.githubusercontent.com/benjamin-james/tagmp3/master/tagmp3 -o ~/bin/tagmp3
+curl https://raw.githubusercontent.com/benjamin-james/tagmp3/master/tagmp3 -o tagmp3 && install tagmp3 ~/bin/tagmp3
 #+END_SRC
 * Usage
 Usage: =tagmp3 songname.mp3=
