@@ -17,7 +17,7 @@ def init(filename):
         except KeyError:
                 has_tags = False
                 fname = os.path.basename(filename)
-                p = re.compile("(.+)\s+-\s+(.*).mp3")
+                p = re.compile("(.+)\s+-\s+(.*)\.mp3")
                 artist = p.match(fname).group(1)
                 title = p.match(fname).group(2)
                 if not title or not artist:
