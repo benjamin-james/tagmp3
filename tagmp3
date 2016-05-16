@@ -26,12 +26,12 @@ def init(filename):
                         sys.exit(1)
         info = get_request(title, artist)
         genres = list()
-        for genre in info['track']['toptags']['tag']:
-                genres.append(genre['name'])
         if not has_tags:
                 ez_audio["title"] = [title]
                 ez_audio["artist"] = [artist]
         try:
+                for genre in info['track']['toptags']['tag']:
+                        genres.append(genre['name'])
                 ez_audio["album"] = [info['track']['album']['title']]
                 ez_audio["genre"] = genres
         except KeyError:
